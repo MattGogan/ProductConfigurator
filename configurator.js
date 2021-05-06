@@ -328,7 +328,7 @@ function buildDropdownOptions(){
     inputSize.classList.add('option-dropdown')
     inputSize.id = 'inputSize';
     inputSize.onchange = function(){
-        buildProductName();
+        buildProductName(1);
     }
 
 
@@ -347,7 +347,7 @@ function buildDropdownOptions(){
     inputEnclosure.classList.add('option-dropdown')
     inputEnclosure.id = 'inputEnclosure';
     inputEnclosure.oninput = function(){
-        buildProductName();
+        buildProductName(2);
     }
     
 
@@ -368,7 +368,7 @@ function buildDropdownOptions(){
     inputVoltage.id = 'inputVoltage';
 
     inputVoltage.onchange = function(){
-        buildProductName();
+        buildProductName(3);
     }
 
 
@@ -482,7 +482,7 @@ function buildImage(){
     buildDropdownOptions();
 }
 
-function buildProductName(){
+function buildProductName(indUpd){
     if(document.getElementById('divName')){
     document.getElementById('divName').remove();
     }
@@ -530,6 +530,10 @@ function buildProductName(){
         div2.innerHTML = '-' + nameBroken[i];
         if(i == 0){
         div2.innerHTML = div2.innerHTML.substring(1);
+        }
+
+        if(indUpd == i){
+            div2.classList.add('animate-in-from-top')
         }
 
         div2.appendChild(document.createElement('br'));

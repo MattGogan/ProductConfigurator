@@ -201,8 +201,15 @@
 
 
 
+.animate-in-from-top{
+  position:relative;
+  animation: from-top 1s;
+}
 
-
+@keyframes from-top{
+  0%{top:-40px;}
+  100%{top:0px;}
+}
 
 
 .become-heading-from-right{
