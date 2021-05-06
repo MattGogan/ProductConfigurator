@@ -2,6 +2,10 @@ console.log('configurator.js loaded');
 let gridlayout;
 let globalCarouselIndex = 0;
 let globalSubCarouselIndex = 0;
+let masterCarouselSpans = [];
+let subCarouselSpans = [];
+let rightArrow;
+let subRightArrow;
 
 let carouselOptions = ['Laminar Flow Hoods', 'Ductless Fume Hoods', 'Biosafety Cabinets', 'UV Box', 'DWS'];
 
@@ -85,13 +89,16 @@ function buildCarousel(carouselIndex){
     span3.classList.add('carousel-right')
     span3.onclick = function(){moveCarousel(true)}
     span3.appendChild(spanRightArrow)
+    rightArrow = spanRightArrow;
 
     spanLeftArrow.appendChild(span1)
 
     div.appendChild(spanLeftArrow)
     //div.appendChild(span2);
     div.appendChild(span3);
-    
+
+    masterCarouselSpans = [spanLeftArrow, span3, span2];
+    console.log(masterCarouselSpans)
 
     var target = document.getElementById('divProductConfigurator');
     target.innerHTML = '';
@@ -137,6 +144,7 @@ function buildSubCarousel(carouselIndex){
     spanRightArrow.innerHTML = '&#8594;';
     spanLeftArrow.classList.add('carousel-subheading');
     spanRightArrow.classList.add('carousel-subheading');
+    subRightArrow = spanRightArrow;
     spanLeftArrow.onclick = function(){moveSubCarousel(false)}
     //spanRightArrow.onclick = function(){moveSubCarousel(true)}
 
@@ -162,6 +170,9 @@ function buildSubCarousel(carouselIndex){
     //div.appendChild(span2);
     div.appendChild(span3);
 
+    subCarouselSpans = [spanLeftArrow, span3, span2];
+    console.log(subCarouselSpans)
+
     div.id = 'divSubCarousel';
     target.appendChild(div)
     target.appendChild(span2)
@@ -173,49 +184,73 @@ function buildSubCarousel(carouselIndex){
 
 
 function moveSubCarousel(dir){
-    document.getElementById('divSubCarousel').remove();
-    document.getElementById('spanSelectedSubitem').remove();
-    document.getElementById('newContainer').remove();
-    document.getElementById('divName').remove();
-    //document.getElementById('spanDescription').remove();
-    //document.getElementById('divCatchphrase').remove();
-    //document.getElementById('imgProduct').remove();
+
+    fadeForm();
 
     if(dir){
         globalSubCarouselIndex++;
+        subCarouselSpans[1].classList.add('become-heading-from-right')
+        subRightArrow.remove();
+        subCarouselSpans[2].style.opacity = '0';
         if(globalSubCarouselIndex == productFamilies[globalCarouselIndex].length){
             globalSubCarouselIndex = 0;
         }
-        buildSubCarousel(globalSubCarouselIndex);
+        setTimeout(function(){ reset(); buildSubCarousel(globalSubCarouselIndex); }, 500);
     }else{
         globalSubCarouselIndex--;
+        subCarouselSpans[0].innerHTML = subCarouselSpans[0].innerHTML.substring(1);
+        subCarouselSpans[0].classList.add('become-heading-from-left')
+        subCarouselSpans[2].style.opacity = '0';
         if(globalSubCarouselIndex == -1){
             globalSubCarouselIndex = productFamilies[globalCarouselIndex].length-1;
         }
-        buildSubCarousel(globalSubCarouselIndex);
+        setTimeout(function(){ reset(); buildSubCarousel(globalSubCarouselIndex); }, 500);
     }
+
+
+}
+
+function fadeForm(){
+    document.getElementById('divName').classList.add('fade-out');
+    document.getElementById('newContainer').classList.add('fade-out');
+}
+
+function reset(){
+    document.getElementById('divName').remove();
+    document.getElementById('newContainer').remove();
+    document.getElementById('divSubCarousel').remove();
+    document.getElementById('spanSelectedSubitem').remove();
 }
 
 
 
 
-
 function moveCarousel(dir){
-    console.log('Starting movement at globalpos: ' + globalCarouselIndex)
+    fadeForm();
+    document.getElementById('divSubCarousel').classList.add('fade-out');
+    subCarouselSpans[2].classList.add('fade-out')
 
     if(dir){
         globalCarouselIndex++;
+        console.log(masterCarouselSpans[1])
+        masterCarouselSpans[1].classList.add('become-heading-from-right')
+        rightArrow.remove();
+        masterCarouselSpans[2].style.opacity = '0';
         if(globalCarouselIndex == carouselOptions.length){
             globalCarouselIndex = 0;
         }
-        buildCarousel(globalCarouselIndex);
+        setTimeout(function(){ buildCarousel(globalCarouselIndex); }, 500);
+        
     }else{
         globalCarouselIndex--;
+        masterCarouselSpans[0].innerHTML = masterCarouselSpans[0].innerHTML.substring(1);
+        masterCarouselSpans[0].classList.add('become-heading-from-left')
+        masterCarouselSpans[2].style.opacity = '0';
         if(globalCarouselIndex == -1){
             console.log('wrapping')
             globalCarouselIndex = carouselOptions.length-1;
         }
-        buildCarousel(globalCarouselIndex);
+        setTimeout(function(){ buildCarousel(globalCarouselIndex); }, 500);
     }
 }
 
@@ -440,7 +475,7 @@ function buildImage(){
     var img = document.createElement('img');
     img.src = "configuratorassets/" + productFamilies[globalCarouselIndex][globalSubCarouselIndex] + ".png";
     img.id = 'imgProduct';
-    img.style = "width:33%";
+    img.classList.add('product-img')
     img.classList.add('fade-in-fast')
     target.appendChild(img);
 

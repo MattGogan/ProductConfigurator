@@ -7,6 +7,7 @@
     outline: 2px solid black;
     padding: 10px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    height: 600px;
 }
 
 .carousel-container{
@@ -78,6 +79,22 @@
     justify-content: space-evenly;
 }
 
+@media screen and (max-width: 750px) {
+  .optionsContainer {
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 40%;
+  }
+
+  .divAppWrapper{
+    height: 1500px;
+  }
+
+  .product-img{
+    max-width: 55%;
+  }
+}
+
 .name-container{
     display:flex;
     justify-content: center;
@@ -94,6 +111,10 @@
 
 .dropdown-lbl{
     font-size: 12px;
+}
+
+.product-img{
+  max-width: 33%;
 }
 
 .fade-in-text {
@@ -114,6 +135,15 @@
     -moz-animation: fadeIn linear 1s;
     -o-animation: fadeIn linear 1s;
     -ms-animation: fadeIn linear 1s;
+  }
+
+
+  .fade-out{
+    animation: fadeOut linear .55s;
+    -webkit-animation: fadeOut linear .55s;
+    -moz-animation: fadeOut linear .55s;
+    -o-animation: fadeOut linear .55s;
+    -ms-animation: fadeOut linear .55s;
   }
   
   @keyframes fadeIn {
@@ -139,4 +169,75 @@
   @-ms-keyframes fadeIn {
     0% {opacity:0;}
     100% {opacity:1;}
+  }
+
+
+
+  @keyframes fadeOut {
+    0% {opacity:1;}
+    100% {opacity:0;}
+  }
+  
+  @-moz-keyframes fadeOut {
+    0% {opacity:1;}
+    100% {opacity:0;}
+  }
+  
+  @-webkit-keyframes fadeOut {
+    0% {opacity:1;}
+    100% {opacity:0;}
+  }
+  
+  @-o-keyframes fadeOut {
+    0% {opacity:1;}
+    100% {opacity:0;}
+  }
+  
+  @-ms-keyframes fadeOut {
+    0% {opacity:1;}
+    100% {opacity:0;}
+  }
+
+
+
+
+
+
+
+
+.become-heading-from-right{
+  position: relative;
+  animation: become-heading-from-right .5s;
+  /*animation: goLeft .5s;*/
+  /*animation: color-change-to-black .5s;*/
+  /*animation: sizeToHeading .5s;*/
+}
+
+.become-heading-from-left{
+  position: relative;
+  animation: become-heading-from-left .5s;
+}
+
+
+  @keyframes color-change-to-black {
+    0% { color: #808080; }
+    100% { color: #000; }
+  }
+
+  @keyframes sizeToHeading{
+    0% { transform: scale(1); }
+    100% { transform: scale(2.5); }
+  }
+
+
+
+
+  @keyframes become-heading-from-right{
+    0%{right: 0px; transform:scale(1); color: #808080; }
+    100%{right: 45%; transform:scale(2); color: #000;}
+  }
+
+  @keyframes become-heading-from-left{
+    0%{left: 0px; transform:scale(1); color: #808080; }
+    100%{left: 45%; transform:scale(2); color: #000;}
   }
